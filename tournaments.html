@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        // Check if the user has the digital key card
+        const sessionAuth = localStorage.getItem("cyberBoyzAuth");
+
+        if (sessionAuth !== "granted") {
+            // If they don't have it, alert them and boot them back to the homepage
+            alert("⚠️ ACCESS DENIED: SECURE TERMINAL LOCKED. PLEASE LOG IN FIRST.");
+            window.location.href = "index.html";
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Boyz - MKXL Tournament Database</title>
+    <style>
+        body {
+            background-color: #0b0b16;
+            color: #00ffff;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 2px solid #ff007f;
+            padding-bottom: 20px;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            color: #fff;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px #ff007f, 0 0 20px #ff007f;
+            font-size: 2.5rem;
+            margin: 0;
+        }
+
+        .subtitle {
+            color: #00ffff;
+            font-size: 1.1rem;
+            margin-top: 5px;
+        }
+
+        /* Leaderboard Table Styling */
+        .leaderboard-section {
+            background: #12122c;
+            border: 2px solid #00ffff;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            text-align: left;
+        }
+
+        th {
+            color: #ff007f;
+            border-bottom: 2px solid #ff007f;
+            padding: 12px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #1a1a3a;
+            color: #fff;
+        }
+
+        tr:hover {
+            background: rgba(0, 255, 255, 0.05);
+        }
+
+        .rank-highlight {
+            color: #00ff66 !important;
+            font-weight: bold;
+        }
+
+        /* Bracket Grid Layout */
+        .rounds-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 30px;
+        }
+
+        .round-box {
+            background: #12122c;
+            border: 2px solid #ff007f;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 0 15px rgba(255, 0, 127, 0.2);
+        }
+
+        .round-box h2 {
+            color: #fff;
+            text-shadow: 0 0 8px #ff007f;
+            margin-top: 0;
+            border-bottom: 1px dashed #ff007f;
+            padding-bottom: 10px;
+        }
+
+        .match-list {
+            list-style: none;
+            padding: 0;
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        /* Scrollbar styling for code accuracy */
+        .match-list::-webkit-scrollbar {
+            width: 6px;
+        }
+        .match-list::-webkit-scrollbar-thumb {
+            background: #ff007f;
+            border-radius: 3px;
+        }
+
+        .match-item {
+            background: #1a1a3a;
+            margin-bottom: 10px;
+            padding: 10px 15px;
+            border-radius: 6px;
+            border-left: 3px solid #00ffff;
+            font-size: 0.9rem;
+        }
+
+        .winner-tag {
+            background: #ff007f;
+            color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-top: 20px;
+            box-shadow: 0 0 10px #ff007f;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #00ffff;
+            text-decoration: none;
+            border: 1px solid #00ffff;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            background: rgba(0, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <a href="index.html" class="back-btn">< Return to HQ</a>
+
+        <header>
+            <h1>Mortal Kombat XL</h1>
+            <p class="subtitle">Official Arena Tournament Records</p>
+        </header>
+
+        <div class="leaderboard-section">
+            <h2 style="color: #00ffff; margin-top: 0; text-shadow: 0 0 8px #00ffff;">📊 Overall Standings</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Player Name</th>
+                        <th>Played</th>
+                        <th>Win</th>
+                        <th>Lose</th>
+                        <th>Rating</th>
+                        <th>OVR Rating</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="rank-highlight">
+                        <td>🥇 Cillian Murphy27</td>
+                        <td>7</td>
+                        <td>6</td>
+                        <td>1</td>
+                        <td>87.5%</td>
+                        <td>91</td>
+                    </tr>
+                    <tr>
+                        <td>🥈 SnapDrago27</td>
+                        <td>8</td>
+                        <td>5</td>
+                        <td>3</td>
+                        <td>62.5%</td>
+                        <td>87</td>
+                    </tr>
+                    <tr>
+                        <td>🥉 GhostViper74</td>
+                        <td>7</td>
+                        <td>4</td>
+                        <td>3</td>
+                        <td>57%</td>
+                        <td>84</td>
+                    </tr>
+                    <tr>
+                        <td>HyperSteve07</td>
+                        <td>7</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>42.9%</td>
+                        <td>78</td>
+                    </tr>
+                    <tr>
+                        <td>Maverick63</td>
+                        <td>7</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>42.9%</td>
+                        <td>78</td>
+                    </tr>
+                    <tr>
+                        <td>Turboknight</td>
+                        <td>4</td>
+                        <td>1</td>
+                        <td>3</td>
+                        <td>25%</td>
+                        <td>70</td>
+                    </tr>
+                    <tr>
+                        <td>Sentri Void46</td>
+                        <td>4</td>
+                        <td>0</td>
+                        <td>4</td>
+                        <td>0%</td>
+                        <td>65</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="rounds-grid">
+            
+            <div class="round-box">
+                <h2>⚡ Round 1 Ledger</h2>
+                <ul class="match-list">
+                    <li class="match-item"><strong>Match 1:</strong> Turboknight vs <span style="color: #00ff66; font-weight: bold;">Maverick63 (WIN)</span></li>
+                    <li class="match-item"><strong>Match 2:</strong> HyperSteve07 vs <span style="color: #00ff66; font-weight: bold;">SnapDrago27 (WIN)</span></li>
+                    <li class="match-item"><strong>Match 3:</strong> Sentri Void 45 vs <span style="color: #00ff66; font-weight: bold;">Cillian Murphy27 (WIN)</span></li>
+                    <li class="match-item"><strong>Match 4:</strong> Maverick63 vs <span style="color: #00ff66; font-weight: bold;">SnapDrago27 (WIN)</span></li>
+                    <li class="match-item"><strong>Match 5:</strong> <span style="color: #00ff66; font-weight: bold;">Cillian Murphy27 (WIN)</span> vs GhostViper74</li>
+                    <li class="match-item"><strong>Match 6:</strong> Cillian Murphy27 vs <span style="color: #00ff66; font-weight: bold;">SnapDrago27 (WIN)</span></li>
+                    <li class="match-item"><strong>Match 7:</strong> Turboknight vs <span style="color: #00ff66; font-weight: bold;">HyperSteve07 (WIN)</span></li>
+                    <li class="match-item"><strong>Match 8:</strong> <span style="color: #00ff66; font-weight: bold;">Maverick63 (WIN)</span> vs Sentri Void46</li>
+                    <li class="match-item"><strong>Match 9:</strong> <span style="color: #00ff66; font-weight: bold;">HyperSteve07 (WIN)</span> vs Maverick63</li>
+                    <li class="match-item"><strong>Match 10:</strong> <span style="color: #00ff66; font-weight: bold;">GhostViper74 (WIN)</span> vs Maverick63</li>
+                    <li class="match-item" style="border-left-color: #ff007f;"><strong>Finale:</strong> SnapDrago27 vs <span style="color: #ff007f; font-weight: bold;">GhostViper74 (CHAMP)</span></li>
+                </ul>
+                <div class="winner-tag">🏆 ROUND 1 CHAMPION: GhostViper74</div>
+            </div>
+
+            <div class="round-box">
+                <h2>⚡ Round 2 Ledger</h2>
+                <ul class="match-list">
+                    <li class="match-item"><strong>Match 1:</strong> <span style="color: #00ff66; font-weight: bold;">GhostViper74 (WIN)</span> vs HyperSteve07</li>
+                    <li class="match-item"><strong>Match 2:</strong> <span style="color: #00ff66; font-weight: bold;">Cillian Murphy27 (WIN)</span> vs Sentri Void46</li>
+                    <li class="match-item"><strong>Match 3:</strong> <span style="color: #00ff66; font-weight: bold;">SnapDrago27 (WIN)</span> vs Maverick63</li>
+                    <li class="match-item"><strong>Match 4:</strong> HyperSteve07 vs <span style="color: #00ff66; font-weight: bold;">Cillian Murphy27 (WIN)</span></li>
+                    <li class="match-item"><strong>Match 5:</strong> <span style="color: #00ff66; font-weight: bold;">SnapDrago27 (WIN)</span> vs Maverick63</li>
+                    <li class="match-item"><strong>Match 6:</strong> <span style="color: #00ff66; font-weight: bold;">Cillian Murphy27 (WIN)</span> vs SnapDrago27</li>
+                    <li class="match-item"><strong>Match 7:</strong> <span style="color: #00ff66; font-weight: bold;">GhostViper74 (WIN)</span> vs Sentri Void46</li>
+                    <li class="match-item"><strong>Match 8:</strong> <span style="color: #00ff66; font-weight: bold;">Maverick63 (WIN)</span> vs HyperSteve07</li>
+                    <li class="match-item"><strong>Match 9:</strong> <span style="color: #00ff66; font-weight: bold;">GhostViper74 (WIN)</span> vs HyperSteve07</li>
+                    <li class="match-item"><strong>Match 10:</strong> <span style="color: #00ff66; font-weight: bold;">SnapDrago27 (WIN)</span> vs GhostViper74</li>
+                    <li class="match-item" style="border-left-color: #ff007f;"><strong>Finale:</strong> <span style="color: #00ff66; font-weight: bold;">Cillian Murphy27 (CHAMP)</span> vs SnapDrago27</li>
+                </ul>
+                <div class="winner-tag" style="background: #00ff66; color: #0b0b16; box-shadow: 0 0 10px #00ff66;">🏆 ROUND 2 CHAMPION: Cillian Murphy27</div>
+            </div>
+
+        </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

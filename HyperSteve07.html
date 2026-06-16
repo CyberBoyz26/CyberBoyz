@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        // Check if the user has the digital key card
+        const sessionAuth = localStorage.getItem("cyberBoyzAuth");
+
+        if (sessionAuth !== "granted") {
+            // If they don't have it, alert them and boot them back to the homepage
+            alert("⚠️ ACCESS DENIED: SECURE TERMINAL LOCKED. PLEASE LOG IN FIRST.");
+            window.location.href = "index.html";
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Boyz Database - Profile</title>
+    <style>
+        /* Cyberpunk Theme Styling */
+         body {
+            /* 1. Link your image here */
+            background-image: linear-gradient(rgba(11, 11, 22, 0.8), rgba(11, 11, 22, 0.8)), url('cyber-bg.png');
+    
+            /* 2. Make it cover the whole screen perfectly */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Keeps the background still while scrolling */
+            background-repeat: no-repeat;
+    
+            color: #00ffff;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .dossier-container {
+            background: #12122c;
+            border: 2px solid #ff007f;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 700px;
+            padding: 30px;
+            box-shadow: 0 0 25px rgba(255, 0, 127, 0.4);
+            box-sizing: border-box;
+        }
+
+        /* Top Header Area */
+        .profile-header {
+            border-bottom: 2px dashed #00ffff;
+            padding-bottom: 20px;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .status-badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: #00ff66;
+            color: #0b0b16;
+            padding: 4px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            border-radius: 4px;
+            box-shadow: 0 0 10px #00ff66;
+        }
+
+        h1 {
+            color: #fff;
+            margin: 0 0 5px 0;
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px #00ffff;
+        }
+
+        .role-title {
+            color: #ff007f;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        /* Grid Data Sections */
+        .info-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .data-box {
+            background: #1a1a3a;
+            border: 1px solid #00ffff;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .data-box.full-width {
+            grid-column: span 2;
+        }
+
+        .label {
+            color: #ff007f;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .value {
+            color: #fff;
+            font-size: 1.1rem;
+            margin: 0;
+        }
+
+        .quote {
+            font-style: italic;
+            color: #00ffff;
+            border-left: 3px solid #ff007f;
+            padding-left: 10px;
+            margin: 5px 0 0 0;
+        }
+
+        /* Action Buttons */
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        .btn {
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .back-btn {
+            color: #00ffff;
+            border: 1px solid #00ffff;
+        }
+
+        .back-btn:hover {
+            background: rgba(0, 255, 255, 0.2);
+            box-shadow: 0 0 10px #00ffff;
+        }
+
+        .social-btn {
+            background: #ff007f;
+            color: #fff;
+        }
+
+        .social-btn:hover {
+            background: #e0006c;
+            box-shadow: 0 0 15px #ff007f;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dossier-container">
+        
+        <div class="profile-header">
+            <span class="status-badge">[ONLINE]</span> 
+            
+            <h1>HyperSteve07</h1> 
+            
+            <p class="role-title">RANK: MAIN GAMER</p> 
+        </div>
+
+        <div class="info-section">
+            <div class="data-box">
+                <span class="label">Date of Birth</span>
+                <p class="value">October 24, 2008</p>
+            </div>
+
+            <div class="data-box">
+                <span class="label">Comms Line (Contact No)</span>
+                <p class="value">+1 555-0199</p>
+            </div>
+
+            <div class="data-box full-width">
+                <span class="label">Secure Email (Gmail)</span>
+                <p class="value">snapdrago27@gmail.com</p>
+            </div>
+            
+            <div class="data-box">
+                <span class="label">Operative Since</span>
+                <p class="value">EST. 2024</p>
+            </div>
+
+            <div class="data-box">
+                <span class="label">Energy Source</span>
+                <p class="value">Doritos & Monster</p>
+            </div>
+
+            <div class="data-box full-width">
+                <span class="label">Primary Loadout (Top Games)</span>
+                <p class="value">Valorant, Minecraft, GTA V</p>
+            </div>
+
+            <div class="data-box full-width">
+                <span class="label">Database Biography</span>
+                <p class="value">Joined the Cyber Boyz during the summer gaming marathon. Known for clutching 1v3 rounds in competitive matches and staying up until 3 AM holding the discord server together.</p>
+            </div>
+
+            <div class="data-box full-width">
+                <span class="label">Intercepted Transmission (Signature Quote)</span>
+                <p class="quote">"We win these, or we lag trying."</p>
+            </div>
+
+        </div>
+
+        <div class="btn-container">
+            <a href="index.html" class="btn back-btn">< Return to HQ</a>
+            
+            <a href="https://discord.com" target="_blank" class="btn social-btn">Connect on Discord</a>
+        </div>
+
+    </div>
+
+</body>
+</html>
