@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CYBER BOYZ // REFLEX TEST</title>
+    <style>
+        body {
+            background-color: #05050a;
+            color: #00ff66;
+            font-family: 'Courier New', Courier, monospace;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+        .game-container {
+            max-width: 600px;
+            margin: 50px auto;
+            border: 2px solid #00ff66;
+            padding: 30px;
+            box-shadow: 0 0 20px rgba(0, 255, 102, 0.2);
+            background: rgba(10, 10, 15, 0.9);
+        }
+        #target {
+            width: 100px;
+            height: 100px;
+            background-color: #ff007f; /* Neon Pink when waiting */
+            margin: 30px auto;
+            cursor: pointer;
+            display: none;
+            box-shadow: 0 0 15px #ff007f;
+            transition: transform 0.1s;
+        }
+        #target.active {
+            background-color: #00ff66; /* Neon Green when it's time to click! */
+            box-shadow: 0 0 25px #00ff66;
+        }
+        .btn {
+            background: transparent;
+            border: 1px solid #00ff66;
+            color: #00ff66;
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            text-shadow: 0 0 5px #00ff66;
+        }
+        .btn:hover {
+            background: #00ff66;
+            color: #05050a;
+        }
+        #result {
+            font-size: 1.5rem;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="game-container">
+    <h2>[ SYSTEM REFLEX TEST ]</h2>
+    <p>Click "START NETWORK SCAN". Wait for the box to turn <span style="color: #00ff66;">GREEN</span>, then click it instantly!</p>
+    
+    <button class="btn" id="startBtn" onclick="startGame()">START NETWORK SCAN</button>
+    
+    <div id="target" onclick="clickTarget()"></div>
+    <div id="result">TIME: 0ms</div>
+    
+    <br><br>
+    <a href="index.html" style="color: #ff007f; text-decoration: none;">← Return to HQ</a>
+</div>
+
+<script>
+    let startTime;
+    let timer;
+    const target = document.getElementById('target');
+    const resultDisplay = document.getElementById('result');
+    const startBtn = document.getElementById('startBtn');
+
+    function startGame() {
+        startBtn.style.display = 'none';
+        resultDisplay.innerText = "WAIT FOR IT...";
+        target.style.display = 'block';
+        target.classList.remove('active');
+        
+        // Random delay between 2 to 5 seconds before turning green
+        let randomDelay = Math.random() * 3000 + 2000;
+        
+        timer = setTimeout(() => {
+            target.classList.add('active');
+            startTime = Date.now();
+        }, randomDelay);
+    }
+
+    function clickTarget() {
+        if (target.classList.contains('active')) {
+            let endTime = Date.now();
+            let reactionTime = endTime - startTime;
+            resultDisplay.innerText = `SUCCESS! RESPONSE TIME: ${reactionTime}ms`;
+            target.classList.remove('active');
+            startBtn.style.display = 'inline-block';
+            startBtn.innerText = "TRY AGAIN";
+        } else {
+            // Player clicked too early!
+            clearTimeout(timer);
+            resultDisplay.innerText = "SYSTEM MALFUNCTION: CLICKED TOO EARLY!";
+            target.style.display = 'none';
+            startBtn.style.display = 'inline-block';
+            startBtn.innerText = "RESTART SYSTEM";
+        }
+    }
+</script>
+
+</body>
+</html>

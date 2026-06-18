@@ -261,53 +261,118 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
         }
         
-        .countdown-container {
-            background: #11112a;
-            border: 1px dashed #ff007f;
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
-            max-width: 500px;
+        .tournament-panel {
+            background: rgba(20, 5, 5, 0.85);
+            border: 2px dashed #ff0055;
+            max-width: 650px;
             margin: 30px auto;
-            box-shadow: 0 0 15px rgba(255, 0, 127, 0.2);
-            font-family: 'Courier New', Courier, monospace;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            box-shadow: 0 0 15px rgba(255, 0, 85, 0.3);
+            text-align: center;
         }
 
-        .countdown-title {
-            color: #00ffff;
-            font-size: 0.9rem;
+        .panel-header {
+            color: #ff0055;
             font-weight: bold;
             letter-spacing: 2px;
-            margin-bottom: 15px;
-            text-shadow: 0 0 5px #00ffff;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
         }
 
-        #countdown-clock {
+        .objective-text {
+            color: #ffffff;
+            font-size: 0.9rem;
+            margin-bottom: 25px;
+            opacity: 0.8;
+        }
+
+        .timer-display {
             display: flex;
             justify-content: center;
             gap: 20px;
-}
+        }
 
         .time-block {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 10px 15px;
+            border: 1px solid #ff0055;
             min-width: 70px;
         }
 
         .time-block span {
-            color: #fff;
-            font-size: 2.2rem;
+            font-size: 2rem;
+            color: #ffffff;
             font-weight: bold;
-            text-shadow: 0 0 10px #ff007f, 0 0 20px #ff007f;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
         }
 
-        .time-block small {
-            color: #888;
+        .time-block p {
             font-size: 0.7rem;
-            margin-top: 5px;
+            color: #ff0055;
+            margin: 5px 0 0 0;
+        }
+
+        .status-active {
+            margin-top: 15px;
+            font-size: 0.8rem;
+            color: #ffcc00;
             letter-spacing: 1px;
         }
+    
+
+        .cyber-game-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: space-between;
+            background: linear-gradient(45deg, #120136, #03001e);
+            border: 2px solid #00ff66;
+            color: #00ff66;
+            padding: 12px 25px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-decoration: none;
+            letter-spacing: 2px;
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(0, 255, 102, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            margin: 20px auto;
+            min-width: 320px;
+        }
+
+        .cyber-game-btn:hover {
+            color: #ffffff;
+            background: #00ff66;
+            border-color: #ffffff;
+            box-shadow: 0 0 25px rgba(0, 255, 102, 0.8);
+            transform: translateY(-2px);
+        }
+
+        .btn-icon {
+            font-size: 1.4rem;
+            margin-right: 15px;
+        }
+
+        .btn-text {
+            flex-grow: 1;
+            text-align: left;
+        }
+
+        .btn-glitch {
+            font-size: 0.8rem;
+            color: #ff007f;
+            margin-left: 15px;
+            text-shadow: 0 0 5px #ff007f;
+        }
+
+        .cyber-game-btn:hover .btn-glitch {
+            color: #120136;
+            text-shadow: none;
+        }
+
+    
 
         footer {
             margin-top: 50px;
@@ -346,14 +411,18 @@
         <p class="subtitle">Welcome to the digital headquarters.</p>
     </header>
 
-    <div class="countdown-container">
-        <div class="countdown-title">🚨 NEXT SQUAD OPERATION IN:</div>
-        <div id="countdown-clock">
-            <div class="time-block"><span id="days">00</span><small>DAYS</small></div>
-            <div class="time-block"><span id="hours">00</span><small>HRS</small></div>
-            <div class="time-block"><span id="minutes">00</span><small>MINS</small></div>
-            <div class="time-block"><span id="seconds">00</span><small>SECS</small></div>
-        </div>
+    <div class="tournament-panel">
+        <div class="panel-header">🚨 UPCOMING DEPLOYMENT // TOURNAMENT RUSH</div>
+            <div class="objective-text">MISSION: Squad Championship Match</div>
+            
+            <div class="timer-display">
+                <div class="time-block"><span id="t-days">00</span><p>DAYS</p></div>
+                <div class="time-block"><span id="t-hours">00</span><p>HOURS</p></div>
+                <div class="time-block"><span id="t-mins">00</span><p>MINS</p></div>
+                <div class="time-block"><span id="t-secs">00</span><p>SECS</p></div>
+            </div>
+        
+        <div id="status-msg" class="status-active">MONITORING TELEMETRY...</div>
     </div>
 
     <div class="container">
@@ -448,6 +517,14 @@
     </div>
 </div>
 
+    <a href="game.html" class="cyber-game-btn">
+        <span class="btn-icon">🎮</span>
+        <span class="btn-text">INITIALIZE REFLEX TEST</span>
+        <span class="btn-glitch">[RUN GAME]</span>
+    </a>
+
+
+
     <footer>
         <p>&copy; 2026 Cyber Boyz. All rights reserved. Forged by SnapDrago27.</p>
     </footer>
@@ -477,32 +554,36 @@
     </script>
     
     <script>
-        // Set the date you are counting down to (Year, Month-1, Day, Hour, Minute)
-        // Note: Months start from 0 (January is 0, December is 11). 
-        // Let's set it for a massive summer LAN party on July 15, 2026!
-        const targetDate = new Date(2026, 6, 31, 10, 30, 0).getTime();
+        // Set your target tournament date here (Year, Month-1, Day, Hour, Minute)
+        // Note: Months start from 0 (January is 0, June is 5, July is 6)
+        const targetTournamentDate = new Date(2026, 6, 31, 10, 0, 0).getTime(); 
 
-        const timerInterval = setInterval(function() {
+        const tournamentInterval = setInterval(function() {
             const now = new Date().getTime();
-            const difference = targetDate - now;
+            const difference = targetTournamentDate - now;
 
-            // Time calculations for days, hours, minutes and seconds
+            if (difference <= 0) {
+                clearInterval(tournamentInterval);
+                document.getElementById("t-days").innerText = "00";
+                document.getElementById("t-hours").innerText = "00";
+                document.getElementById("t-mins").innerText = "00";
+                document.getElementById("t-secs").innerText = "00";
+                
+                let status = document.getElementById("status-msg");
+                status.innerText = "⚠️ OPERATION LIVE // SQUAD DEPLOYED";
+                status.style.color = "#00ff66";
+                return;
+            }
+
             const days = Math.floor(difference / (1000 * 60 * 60 * 24));
             const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((difference % (1000 * 60)) / 1000);
 
-            // Display the results in the matching HTML elements
-            document.getElementById("days").innerText = days < 10 ? "0" + days : days;
-            document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
-            document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
-            document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
-
-            // If the countdown is finished, display a deployment message
-            if (difference < 0) {
-                clearInterval(timerInterval);
-                document.querySelector(".countdown-container").innerHTML = "<h2 style='color:#00ff66; text-shadow: 0 0 10px #00ff66; margin:0;'>🚀 OPERATION LIVE: LOCK IN!</h2>";
-            }
+            document.getElementById("t-days").innerText = days.toString().padStart(2, '0');
+            document.getElementById("t-hours").innerText = hours.toString().padStart(2, '0');
+            document.getElementById("t-mins").innerText = minutes.toString().padStart(2, '0');
+            document.getElementById("t-secs").innerText = seconds.toString().padStart(2, '0');
         }, 1000);
 
         function checkPassword() {
