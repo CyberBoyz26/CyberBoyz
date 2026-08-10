@@ -110,67 +110,8 @@
             min-height: 18px; /* Prevents layout shifting when error pops up */
         }
 
-        /* Hide the music box during the 10-second intro */
-        .music-player {
-            opacity: 0;
-            pointer-events: none; /* Prevents clicks while invisible */
-            transition: opacity 1.5s ease;
-        }
 
-        /* Class to make the music box fade in after 10 seconds */
-        .music-player.show-element {
-            opacity: 1;
-            pointer-events: auto; /* Re-enables clicks once visible */
-        }
-
-        .music-player {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #12122c;
-            border: 1px solid #00ffff;
-            border-radius: 8px;
-            padding: 10px 15px;
-            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
-            z-index: 1000; /* Keeps it above everything else */
-            font-family: 'Courier New', Courier, monospace;
-        }
-
-        .music-title {
-            color: #ff007f;
-            font-size: 0.8rem;
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            text-shadow: 0 0 5px #ff007f;
-        }
-
-        .music-player button {
-            background: transparent;
-            border: 1px solid #00ffff;
-            color: #00ffff;
-            padding: 4px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-            font-family: inherit;
-        }
-
-        .music-player button:hover {
-            background: rgba(0, 255, 255, 0.2);
-            box-shadow: 0 0 8px #00ffff;
-        }
-
-        .controls {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        #volume-slider {
-            width: 80px;
-            accent-color: #ff007f;
-        }
+        
         body {
             background-color: #0d0d1a;
             color: #00ffff;
@@ -442,15 +383,6 @@
     </div>
     
     
-    
-    <div class="music-player">
-        <span class="music-title">📻 SYSTEM AUDIO</span>
-        <audio id="cyber-audio" src="background-music.mp3" loop></audio>
-            <div class="controls">
-                <button id="play-btn" onclick="toggleMusic()">PLAY</button>
-                <input type="range" id="volume-slider" min="0" max="1" step="0.1" value="0.5" oninput="changeVolume(this.value)">
-            </div>
-    </div>
    
 
     <header>
@@ -576,29 +508,6 @@
         <p>&copy; 2026 Cyber Boyz. All rights reserved. Forged by SnapDrago27.</p>
     </footer>
     
-    <script>
-        const audio = document.getElementById('cyber-audio');
-        const playBtn = document.getElementById('play-btn');
-
-        function toggleMusic() {
-            if (audio.paused) {
-                audio.play();
-                playBtn.innerText = 'PAUSE';
-                playBtn.style.borderColor = '#ff007f';
-                playBtn.style.color = '#ff007f';
-            } else {
-                audio.pause();
-                playBtn.innerText = 'PLAY';
-                playBtn.style.borderColor = '#00ffff';
-                playBtn.style.color = '#00ffff';
-            }
-        }
-
-        function changeVolume(volume) {
-            audio.volume = volume;
-        }
-
-    </script>
     
     <script>
         // Set your target tournament date here (Year, Month-1, Day, Hour, Minute)
