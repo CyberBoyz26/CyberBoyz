@@ -575,21 +575,29 @@
         }
 
         
-        // Wait 10 seconds (10000 milliseconds) for the video intro
-    setTimeout(function() {
-        const video = document.getElementById("bg-video");
-        const overlay = document.querySelector(".passcode-overlay");
+        document.addEventListener("DOMContentLoaded", function() {
+            const video = document.getElementById("bg-video");
+            const overlay = document.querySelector(".passcode-overlay");
+            const musicBox = document.querySelector(".music-box");
 
-        // Push video to background and darken it
-        if (video) {
-            video.classList.add("in-background");
-        }
+            // Check if the user has already seen the intro video during this visit
+            if (sessionStorage.getItem("introSeen") === "true") {
+                // Skip intro immediately!
+                if (video) video.classList.add("in-background");
+                if (overlay) overlay.classList.add("show-gatekeeper");
+                if (musicBox) musicBox.classList.add("show-element");
+            } else {
+                // Play the 10-second intro for first-time entry
+                setTimeout(function() {
+                    if (video) video.classList.add("in-background");
+                    if (overlay) overlay.classList.add("show-gatekeeper");
+                    if (musicBox) musicBox.classList.add("show-element");
 
-        // Fade in your passcode gatekeeper on top
-        if (overlay) {
-            overlay.classList.add("show-gatekeeper");
-        }
-    }, 10000); // 10000ms = 10 seconds
+                    // Remember that the user has seen the intro
+                    sessionStorage.setItem("introSeen", "true");
+                }, 10000); // 10 seconds
+            }
+        });
 
         document.addEventListener("DOMContentLoaded", () => {
             const sessionAuth = localStorage.getItem("cyberBoyzAuth");
