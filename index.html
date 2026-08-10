@@ -7,6 +7,37 @@
     <style>
         /* CSS styling starts here */
         /* Security Gatekeeper Overlay */
+        /* Video Background Styling */
+        /* Fullscreen Intro Video Style */
+    #bg-video {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        object-fit: cover;
+        z-index: 100; /* Plays IN FRONT of everything during intro */
+        brightness: 100%;
+        transition: all 2s ease; /* Creates a smooth fade effect */
+    }
+
+    /* Class added after 10 seconds to push video into the background */
+    #bg-video.in-background {
+        z-index: -1; /* Pushes behind your gatekeeper */
+        filter: brightness(0.4); /* Darkens video so passcode text is easy to read */
+    }
+
+    /* Initially hide your passcode overlay during the 10-second video intro */
+    #gatekeeper-overlay {
+        opacity: 0;
+        transition: opacity 1.5s ease;
+    }
+
+    /* Class to make passcode overlay visible after intro */
+    #gatekeeper-overlay.show-gatekeeper {
+        opacity: 1;
+    }
+
         #gatekeeper-overlay {
             position: fixed;
             top: 0;
@@ -382,6 +413,10 @@
     </style>
 </head>
 <body>
+    <video autoplay muted loop id="bg-video">
+        <source src="cyber-animation.mp4" type="video/mp4">
+    </video>
+
     <div id="gatekeeper-overlay">
         <div class="login-box">
             <h2 class="glitch-title" style="font-size: 2rem; color: #ff007f; text-shadow: 0 0 10px #ff007f;">🔒 SECURITY CHECK</h2>
@@ -617,6 +652,23 @@
                 }
             }
         }
+
+        
+        // Wait 10 seconds (10000 milliseconds) for the video intro
+    setTimeout(function() {
+        const video = document.getElementById("bg-video");
+        const overlay = document.querySelector(".passcode-overlay");
+
+        // Push video to background and darken it
+        if (video) {
+            video.classList.add("in-background");
+        }
+
+        // Fade in your passcode gatekeeper on top
+        if (overlay) {
+            overlay.classList.add("show-gatekeeper");
+        }
+    }, 10000); // 10000ms = 10 seconds
 
         document.addEventListener("DOMContentLoaded", () => {
             const sessionAuth = localStorage.getItem("cyberBoyzAuth");
