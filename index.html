@@ -110,6 +110,18 @@
             min-height: 18px; /* Prevents layout shifting when error pops up */
         }
 
+        /* Hide the music box during the 10-second intro */
+        .music-player {
+            opacity: 0;
+            pointer-events: none; /* Prevents clicks while invisible */
+            transition: opacity 1.5s ease;
+        }
+
+        /* Class to make the music box fade in after 10 seconds */
+        .music-player.show-element {
+            opacity: 1;
+            pointer-events: auto; /* Re-enables clicks once visible */
+        }
 
         .music-player {
             position: fixed;
