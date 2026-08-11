@@ -9,34 +9,35 @@
         /* Security Gatekeeper Overlay */
         /* Video Background Styling */
         /* Fullscreen Intro Video Style */
-    #bg-video {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        object-fit: cover;
-        z-index: 100; /* Plays IN FRONT of everything during intro */
-        brightness: 100%;
-        transition: all 2s ease; /* Creates a smooth fade effect */
-    }
+        #bg-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            z-index: 100; /* Plays IN FRONT of everything during intro */
+            brightness: 100%;
+            transition: all 2s ease; /* Creates a smooth fade effect */
+        }
 
-    /* Class added after 10 seconds to push video into the background */
-    #bg-video.in-background {
-        z-index: -1; /* Pushes behind your gatekeeper */
-        filter: brightness(0.4); /* Darkens video so passcode text is easy to read */
-    }
+        /* Class added after 10 seconds to push video into the background */
+        #bg-video.in-background {
+            z-index: -1; /* Pushes behind your gatekeeper */
+            filter: brightness(0.4); /* Darkens video so passcode text is easy to read */
+        }
 
-    /* Initially hide your passcode overlay during the 10-second video intro */
-    #gatekeeper-overlay {
-        opacity: 0;
-        transition: opacity 1.5s ease;
-    }
+        /* Initially hide your passcode overlay during the 10-second video intro */
+        .passcode-overlay.show-gatekeeper {
+            opacity: 1 !important;
+            pointer-events: auto !important;
+            z-index: 999 !important; /* Keeps passcode box on top of everything */
+        }
 
-    /* Class to make passcode overlay visible after intro */
-    #gatekeeper-overlay.show-gatekeeper {
-        opacity: 1;
-    }
+        /* Class to make passcode overlay visible after intro */
+        #passcode-overlay.show-gatekeeper {
+            opacity: 1;
+        }
 
         #gatekeeper-overlay {
             position: fixed;
@@ -51,6 +52,29 @@
             align-items: center;
             font-family: 'Courier New', Courier, monospace;
             transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        /* Ensure Passcode Overlay covers the screen completely */
+        .passcode-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.85); /* Dark background over video */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999; /* Higher than everything else on the page */
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1s ease;
+        }
+
+        /* Shown state after video intro or instant skip */
+        .passcode-overlay.active-gatekeeper {
+            opacity: 1 !important;
+            pointer-events: auto !important;
         }
 
         .login-box {
@@ -580,22 +604,21 @@
             const overlay = document.querySelector(".passcode-overlay");
             const musicBox = document.querySelector(".music-box");
 
-            // Check if the user has already seen the intro video during this visit
-            if (sessionStorage.getItem("introSeen") === "true") {
-                // Skip intro immediately!
+            function showGatekeeper() {
                 if (video) video.classList.add("in-background");
-                if (overlay) overlay.classList.add("show-gatekeeper");
+                if (overlay) overlay.classList.add("active-gatekeeper");
                 if (musicBox) musicBox.classList.add("show-element");
-            } else {
-                // Play the 10-second intro for first-time entry
-                setTimeout(function() {
-                    if (video) video.classList.add("in-background");
-                    if (overlay) overlay.classList.add("show-gatekeeper");
-                    if (musicBox) musicBox.classList.add("show-element");
+            }
 
-                    // Remember that the user has seen the intro
+            // If user already entered during this visit, skip intro and show gatekeeper immediately
+            if (sessionStorage.getItem("introSeen") === "true") {
+                showGatekeeper();
+            } else {
+                // First visit: Play 10s video, then pop up gatekeeper
+                setTimeout(function() {
+                    showGatekeeper();
                     sessionStorage.setItem("introSeen", "true");
-                }, 10000); // 10 seconds
+                }, 10000);
             }
         });
 
