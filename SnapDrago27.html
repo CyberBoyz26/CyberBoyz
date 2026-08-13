@@ -16,6 +16,35 @@
     <title>Cyber Boyz Database - Profile</title>
     <style>
         /* Cyberpunk Theme Styling */
+        /* Box sizing and overflow protection */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Responsive media & tables */
+        img, video {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
         body {
             /* 1. Link your image here */
             background-image: linear-gradient(rgba(11, 11, 22, 0.8), rgba(11, 11, 22, 0.8)), url('cyber-bg.png');
@@ -161,6 +190,7 @@
             box-shadow: 0 0 15px #ff007f;
         }
     </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 

@@ -5,10 +5,94 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cyber Boyz</title>
     <style>
+
+        /* 1. Reset Box Sizing so padding doesn't break element width */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        /* 2. Prevent Horizontal Scrolling on Mobile */
+        html, body {
+            width: 100%;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 3. Responsive Images & Videos */
+        img, video {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* 4. Responsive Tables (Allows side scrolling if table is too wide on phones) */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 300px; /* Ensures text inside table stays readable */
+        }
+
+        /* 5. Responsive Clock / Time Display Box */
+        .clock, .timer-container, .time-block {
+            display: flex;
+            flex-wrap: wrap; /* Wraps items into rows if screen is too narrow */
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .time-box {
+            font-size: clamp(1.2rem, 5vw, 2.5rem); /* Dynamically shrinks text for small screens */
+            padding: 10px;
+            margin: 5px;
+        }
+
+        /* 6. 📱 Mobile Portrait Adjustments */
+        @media screen and (max-width: 768px) and (orientation: portrait) {
+            /* Fullscreen Video Fix */
+            #bg-video {
+                object-fit: contain;
+                background-color: #000;
+            }
+
+            /* Passcode Overlay Box Fix */
+            .passcode-box {
+                width: 90%;
+                max-width: 340px;
+                padding: 20px 15px;
+            }
+
+            /* Table text scaling for small screens */
+            th, td {
+                padding: 8px 5px;
+                font-size: 0.85rem;
+            }
+        }
+
+
         /* CSS styling starts here */
         /* Security Gatekeeper Overlay */
         /* Video Background Styling */
         /* Fullscreen Intro Video Style */
+       /* Sets the fallback/permanent background image for your site */
+        /* Background Image on body */
+        body {
+            background-color: #0a0a0f;
+            background-image: url('Cyberfbg.png'); /* Your static background picture */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            margin: 0;
+        }
+
+        /* Video starting full opacity on top */
         #bg-video {
             position: fixed;
             top: 0;
@@ -16,47 +100,38 @@
             width: 100vw;
             height: 100vh;
             object-fit: cover;
-            z-index: 100; /* Plays IN FRONT of everything during intro */
-            brightness: 100%;
-            transition: all 2s ease; /* Creates a smooth fade effect */
-        }
-
-        /* Class added after 10 seconds to push video into the background */
-        #bg-video.in-background {
-            z-index: -1; /* Pushes behind your gatekeeper */
-            filter: brightness(0.4); /* Darkens video so passcode text is easy to read */
-        }
-
-        /* Initially hide your passcode overlay during the 10-second video intro */
-        .passcode-overlay.show-gatekeeper {
-            opacity: 1 !important;
-            pointer-events: auto !important;
-            z-index: 999 !important; /* Keeps passcode box on top of everything */
-        }
-
-        /* Class to make passcode overlay visible after intro */
-        #passcode-overlay.show-gatekeeper {
+            z-index: 1000;
             opacity: 1;
+            transition: opacity 1.5s ease-in-out; /* Creates the smooth fade-out */
         }
 
-        #gatekeeper-overlay {
+        /* Class to fade out video opacity */
+        #bg-video.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Passcode overlay starting hidden */
+        .passcode-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(0, 0, 0, 0.85);
-            display: none; /* Keeps it completely hidden while the video plays */
+            background: rgba(0, 0, 0, 0.65); /* Dark tint over your background image */
+            display: flex;
             justify-content: center;
             align-items: center;
             z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1.5s ease-in-out; /* Smooth fade-in for the passcode box */
         }
 
-    
-
-        /* Class added by JavaScript to reveal the overlay */
-        .gatekeeper-overlay.show-overlay {
-            display: flex !important; /* Shows the password box after animation */
+        /* Reveal passcode box */
+        .passcode-overlay.show-overlay {
+            opacity: 1 !important;
+            pointer-events: auto !important;
         }
 
         .login-box {
@@ -370,6 +445,7 @@
             color: #555588;
         }
     </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
     <video autoplay muted loop id="bg-video">
@@ -586,21 +662,34 @@
             const overlay = document.querySelector(".passcode-overlay");
             const musicBox = document.querySelector(".music-box");
 
-            function showGatekeeper() {
-                if (video) video.classList.add("in-background");
-                if (overlay) overlay.classList.add("active-gatekeeper");
+            function startSmoothTransition() {
+                if (video) {
+                    // Step 1: Start fading out the video
+                    video.classList.add("fade-out");
+                    
+                    // Step 2: Hide video element completely after the 1.5s fade finishes
+                    setTimeout(function() {
+                        video.style.display = "none";
+                    }, 1500);
+                }
+
+                // Fade in passcode overlay and music box smoothly over the background image
+                if (overlay) overlay.classList.add("show-overlay");
                 if (musicBox) musicBox.classList.add("show-element");
             }
 
-            // If user already entered during this visit, skip intro and show gatekeeper immediately
+            // Check if user has already seen the video intro during this visit
             if (sessionStorage.getItem("introSeen") === "true") {
-                showGatekeeper();
+                // Skip video immediately for returning visits
+                if (video) video.style.display = "none";
+                if (overlay) overlay.classList.add("show-overlay");
+                if (musicBox) musicBox.classList.add("show-element");
             } else {
-                // First visit: Play 10s video, then pop up gatekeeper
+                // First visit: Let 10s video play, then cross-fade to picture & passcode box
                 setTimeout(function() {
-                    showGatekeeper();
+                    startSmoothTransition();
                     sessionStorage.setItem("introSeen", "true");
-                }, 10000);
+                }, 10000); // 10 seconds
             }
         });
 
