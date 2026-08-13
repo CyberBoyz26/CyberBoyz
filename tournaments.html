@@ -16,10 +16,7 @@
     <title>Cyber Boyz - MKXL Tournament Database</title>
     <style>
         /* Box sizing and overflow protection */
-        *, *::before, *::after {
-            box-sizing: border-box;
-        }
-
+        /* 1. Prevent horizontal page overflow */
         html, body {
             width: 100%;
             overflow-x: hidden;
@@ -27,21 +24,40 @@
             padding: 0;
         }
 
-        /* Responsive media & tables */
-        img, video {
-            max-width: 100%;
-            height: auto;
+        /* 2. Make match cards and tables fit mobile screens */
+        .container, .card, .table-container, [class*="box"], [class*="card"] {
+            max-width: 100% !important;
+            box-sizing: border-box !important;
         }
 
+        /* 3. Make tables scrollable if they are too wide for mobile screens */
         .table-container {
             width: 100%;
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
+        /* 4. Fix cropped text and match boxes on Mobile Portrait */
+        @media screen and (max-width: 768px) and (orientation: portrait) {
+            /* Scale down titles and headers slightly */
+            h1, h2, .title {
+                font-size: 1.5rem !important;
+                word-break: break-word;
+            }
+
+            /* Wrap match list text so it doesn't push off-screen */
+            .match-box, [class*="Match"], [class*="match"] {
+                font-size: 0.85rem !important;
+                padding: 8px 10px !important;
+                white-space: normal !important; /* Allows text to wrap into 2 lines if needed */
+                word-break: break-word !important;
+            }
+
+            /* Table text scaling for mobile */
+            table th, table td {
+                padding: 6px 4px !important;
+                font-size: 0.8rem !important;
+            }
         }
         
         body {
@@ -288,7 +304,7 @@
                 <ul class="match-list">
                     <li class="match-item"><strong>Match 1:</strong> Turboknight vs <span style="color: #00ff66; font-weight: bold;">Maverick63 (WIN)</span></li>
                     <li class="match-item"><strong>Match 2:</strong> HyperSteve07 vs <span style="color: #00ff66; font-weight: bold;">SnapDrago27 (WIN)</span></li>
-                    <li class="match-item"><strong>Match 3:</strong> Sentri Void 45 vs <span style="color: #00ff66; font-weight: bold;">Cillian Murphy27 (WIN)</span></li>
+                    <li class="match-item"><strong>Match 3:</strong> Sentri Void46 vs <span style="color: #00ff66; font-weight: bold;">Cillian Murphy27 (WIN)</span></li>
                     <li class="match-item"><strong>Match 4:</strong> Maverick63 vs <span style="color: #00ff66; font-weight: bold;">SnapDrago27 (WIN)</span></li>
                     <li class="match-item"><strong>Match 5:</strong> <span style="color: #00ff66; font-weight: bold;">Cillian Murphy27 (WIN)</span> vs GhostViper74</li>
                     <li class="match-item"><strong>Match 6:</strong> Cillian Murphy27 vs <span style="color: #00ff66; font-weight: bold;">SnapDrago27 (WIN)</span></li>
