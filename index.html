@@ -62,12 +62,7 @@
                 background-color: #000;
             }
 
-            /* Passcode Overlay Box Fix */
-            .passcode-box {
-                width: 90%;
-                max-width: 340px;
-                padding: 20px 15px;
-            }
+            
 
             /* Table text scaling for small screens */
             th, td {
@@ -111,77 +106,7 @@
             pointer-events: none;
         }
 
-        /* Passcode overlay starting hidden */
-        .passcode-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.65); /* Dark tint over your background image */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 1.5s ease-in-out; /* Smooth fade-in for the passcode box */
-        }
-
-        /* Reveal passcode box */
-        .passcode-overlay.show-overlay {
-            opacity: 1 !important;
-            pointer-events: auto !important;
-        }
-
-        .login-box {
-            background: #11112a;
-            border: 2px solid #ff007f;
-            box-shadow: 0 0 25px rgba(255, 0, 127, 0.4);
-            border-radius: 12px;
-            padding: 40px;
-            text-align: center;
-            max-width: 400px;
-            width: 90%;
-        }
-
-        .login-box input {
-            background: #05050d;
-            border: 1px solid #00ffff;
-            color: #fff;
-            padding: 12px;
-            border-radius: 6px;
-            width: 100%;
-            box-sizing: border-box;
-            text-align: center;
-            font-size: 1.1rem;
-            letter-spacing: 2px;
-            margin-bottom: 15px;
-            outline: none;
-            font-family: inherit;
-        }
-
-        .login-box input:focus {
-            box-shadow: 0 0 10px #00ffff;
-        }
-
-        .login-box button {
-            background: transparent;
-            border: 1px solid #ff007f;
-            color: #ff007f;
-            padding: 10px 25px;
-            font-weight: bold;
-            border-radius: 6px;
-            cursor: pointer;
-            letter-spacing: 1px;
-            font-family: inherit;
-            transition: 0.2s;
-        }
-
-        .login-box button:hover {
-            background: rgba(255, 0, 127, 0.2);
-            box-shadow: 0 0 12px #ff007f;
-        }
+       
 
         #error-msg {
             color: #ff3333;
@@ -474,19 +399,7 @@
     <video autoplay muted loop id="bg-video">
         <source src="cyber-animation.mp4" type="video/mp4">
     </video>
-
-    <div id="gatekeeper-overlay">
-        <div class="login-box">
-            <h2 class="glitch-title" style="font-size: 2rem; color: #ff007f; text-shadow: 0 0 10px #ff007f;">🔒 SECURITY CHECK</h2>
-            <p style="color: #00ffff; letter-spacing: 1px; font-size: 0.85rem; margin-bottom: 20px;">ENTER DEPLOYMENT ACCESS CODE:</p>
-            
-            <input type="password" id="access-code-input" placeholder="••••••••••••" onkeydown="if(event.key === 'Enter') checkPassword()">
-            <button id="auth-btn" onclick="checkPassword()">INITIALIZE</button>
-            
-            <p id="error-msg"></p>
-        </div>
-    </div>
-    
+ 
     
    
 
@@ -648,37 +561,7 @@
             document.getElementById("t-secs").innerText = seconds.toString().padStart(2, '0');
         }, 1000);
 
-        function checkPassword() {
-            const userInput = document.getElementById("access-code-input").value;
-            const errorMsg = document.getElementById("error-msg");
-            // Manually find the overlay element right here to guarantee it exists
-            const gatekeeperOverlay = document.getElementById("gatekeeper-overlay");
-
-            const correctPassword = "CYBERBOYZ2026";
-
-            if (userInput === correctPassword) {
-                // 1. Save the key card to browser memory
-                localStorage.setItem("cyberBoyzAuth", "granted");
-                
-                // 2. Hide the overlay using multiple different methods at once so the browser has no choice but to hide it
-                if (gatekeeperOverlay) {
-                    gatekeeperOverlay.style.display = "none";
-                    gatekeeperOverlay.style.setProperty("display", "none", "important");
-                    gatekeeperOverlay.style.opacity = "0";
-                    gatekeeperOverlay.style.visibility = "hidden";
-                }
-                if (errorMsg) errorMsg.innerText = "";
-            } else {
-                if (errorMsg) errorMsg.innerText = "❌ ACCESS DENIED: INVALID ENCRYPTION KEY";
-                document.getElementById("access-code-input").value = ""; 
-                
-                const loginBox = document.querySelector(".login-box");
-                if (loginBox) {
-                    loginBox.style.borderColor = "#ff3333";
-                    setTimeout(() => { loginBox.style.borderColor = "#ff007f"; }, 500);
-                }
-            }
-        }
+        
 
         
         document.addEventListener("DOMContentLoaded", function() {
