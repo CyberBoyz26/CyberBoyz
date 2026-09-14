@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HQ Squad Terminal</title>
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #0d0814;
+            background-image: url('your-background-image.jpg'); /* Replace with your static background image */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #00f3ff;
+            font-family: 'Courier New', monospace;
+            padding: 20px 10px;
+        }
+
+        .header-nav {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .btn-back {
+            display: inline-block;
+            color: #00f3ff;
+            border: 1px solid #00f3ff;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            background: rgba(13, 8, 20, 0.85);
+            border-radius: 4px;
+        }
+
+        .btn-back:hover {
+            background: #00f3ff;
+            color: #0d0814;
+            box-shadow: 0 0 12px #00f3ff;
+        }
+
+        .form-card, .logs-card {
+            background: rgba(18, 12, 31, 0.9);
+            border: 2px solid #00f3ff;
+            border-radius: 8px;
+            padding: 20px;
+            max-width: 550px;
+            width: 100%;
+            margin: 0 auto 30px auto;
+            box-shadow: 0 0 18px rgba(0, 243, 255, 0.25);
+        }
+
+        .form-card h2, .logs-card h2 {
+            text-align: center;
+            margin-top: 0;
+            color: #e000ff;
+            text-shadow: 0 0 8px #e000ff;
+            letter-spacing: 1px;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: #00f3ff;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            background: #06030a;
+            border: 1px solid #00f3ff;
+            color: #ffffff;
+            font-family: inherit;
+            border-radius: 4px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #e000ff;
+            box-shadow: 0 0 8px #e000ff;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 14px;
+            background: #00f3ff;
+            color: #0d0814;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background: #e000ff;
+            color: #ffffff;
+            box-shadow: 0 0 15px #e000ff;
+        }
+
+        /* Dynamic Local Log Feed Items */
+        .log-entry {
+            background: #06030a;
+            border-left: 4px solid #e000ff;
+            padding: 10px;
+            margin-top: 12px;
+            font-size: 0.85rem;
+            word-break: break-word;
+            color: #ffffff;
+        }
+
+        .log-entry .tag {
+            color: #00f3ff;
+            font-weight: bold;
+        }
+
+        .log-entry .timestamp {
+            color: #8878a0;
+            font-size: 0.75rem;
+        }
+
+        /* Mobile Portrait Layout Fixes */
+        @media screen and (max-width: 768px) and (orientation: portrait) {
+            body {
+                padding: 15px 8px;
+            }
+
+            .form-card, .logs-card {
+                padding: 15px;
+            }
+
+            h2 {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-nav">
+        <a href="index.html" class="btn-back">&lt; RETURN TO HQ</a>
+    </div>
+
+    <!-- TRANSMISSION FORM -->
+    <div class="form-card">
+        <h2>⚡ FEEDBACK TERMINAL</h2>
+        <form action="https://api.web3forms.com/submit" method="post" id="hq-terminal-form">
+            
+            <!-- Web3Forms Access Key -->
+            <input type="hidden" name="access_key" value="9d975b22-a821-4225-af1b-3269570c4322">
+            <input type="hidden" name="subject" value="⚡ New HQ Squad Transmission!">
+            <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+
+            <!-- User Info -->
+            <label for="user-fullname">Full Name:</label>
+            <input type="text" id="user-fullname" name="full_name" placeholder="e.g. Alex Mercer" required>
+
+            <label for="gamer-tag">Gamer Tag:</label>
+            <input type="text" id="gamer-tag" name="gamer_tag" placeholder="e.g. CillianMurphy27" required>
+
+            <label for="user-email">Gmail / Email Address:</label>
+            <input type="email" id="user-email" name="email" placeholder="e.g. user@gmail.com" required>
+
+            <label for="form-type">Transmission Type:</label>
+            <select id="form-type" name="request_type" onchange="toggleFormFields()">
+                <option value="feedback">⭐ Rate HQ & Site Feedback</option>
+                <option value="match">⚔️ Submit Match Score / Report Dispute</option>
+            </select>
+
+            <!-- Feedback Fields -->
+            <div id="feedback-fields">
+                <label for="rating-score">Site Rating:</label>
+                <select id="rating-score" name="rating">
+                    <option value="5">⭐⭐⭐⭐⭐ (5/5) Apex Legend</option>
+                    <option value="4">⭐⭐⭐⭐ (4/5) Solid Work</option>
+                    <option value="3">⭐⭐⭐ (3/5) Average</option>
+                    <option value="2">⭐⭐ (2/5) Needs Upgrades</option>
+                    <option value="1">⭐ (1/5) Trash</option>
+                </select>
+
+                <label for="feedback-comment">Comments & Feedback:</label>
+                <textarea id="feedback-comment" name="comments" rows="3" placeholder="What should we add or fix next?"></textarea>
+            </div>
+
+            <!-- Match Fields -->
+            <div id="match-fields" style="display: none;">
+                <label for="match-details">Match Pair (Your Tag vs Opponent):</label>
+                <input type="text" id="match-details" name="match_pair" placeholder="e.g. GhostViper74 vs SnapDrago27">
+
+                <label for="match-outcome">Match Outcome:</label>
+                <select id="match-outcome" name="match_result">
+                    <option value="Win">Win</option>
+                    <option value="Loss">Loss</option>
+                    <option value="Dispute">Dispute / Suspicious Score</option>
+                </select>
+
+                <label for="security-hash">Security Hash:</label>
+                <input type="text" id="security-hash" name="security_hash" placeholder="e.g. CB-750-XYZ">
+            </div>
+
+            <button type="submit">TRANSMIT DATA</button>
+        </form>
+    </div>
+
+    <!-- LOCAL LOG FEED -->
+    <div class="logs-card">
+        <h2>📡 RECENT TRANSMISSIONS</h2>
+        <div id="logs-feed">
+            <p style="color: #888; text-align: center;">No local transmissions recorded yet.</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleFormFields() {
+            const type = document.getElementById("form-type").value;
+            const feedbackFields = document.getElementById("feedback-fields");
+            const matchFields = document.getElementById("match-fields");
+
+            if (type === "feedback") {
+                feedbackFields.style.display = "block";
+                matchFields.style.display = "none";
+            } else {
+                feedbackFields.style.display = "none";
+                matchFields.style.display = "block";
+            }
+        }
+
+        // Save local history to localStorage before Web3Forms transmits
+        document.getElementById("hq-terminal-form").addEventListener("submit", function() {
+            const tag = document.getElementById("gamer-tag").value;
+            const type = document.getElementById("form-type").value;
+            let details = "";
+
+            if (type === "feedback") {
+                const score = document.getElementById("rating-score").value;
+                const comment = document.getElementById("feedback-comment").value;
+                details = `Rated: ${score}/5 | "${comment}"`;
+            } else {
+                const match = document.getElementById("match-details").value;
+                const outcome = document.getElementById("match-outcome").value;
+                details = `Match: ${match} (${outcome})`;
+            }
+
+            const newEntry = {
+                tag: tag,
+                type: type.toUpperCase(),
+                details: details,
+                time: new Date().toLocaleTimeString()
+            };
+
+            let existingLogs = JSON.parse(localStorage.getItem("hq_logs")) || [];
+            existingLogs.unshift(newEntry);
+            localStorage.setItem("hq_logs", JSON.stringify(existingLogs));
+        });
+
+        function renderLogs() {
+            const feed = document.getElementById("logs-feed");
+            const existingLogs = JSON.parse(localStorage.getItem("hq_logs")) || [];
+
+            if (existingLogs.length === 0) return;
+
+            feed.innerHTML = existingLogs.map(log => `
+                <div class="log-entry">
+                    <span class="tag">[${log.type}] ${log.tag}</span> 
+                    <span class="timestamp">(${log.time})</span>
+                    <div>${log.details}</div>
+                </div>
+            `).join("");
+        }
+
+        // Render previous local submissions when page loads
+        renderLogs();
+    </script>
+</body>
+</html>
